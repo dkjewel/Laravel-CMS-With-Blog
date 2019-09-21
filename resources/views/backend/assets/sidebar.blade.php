@@ -26,10 +26,10 @@
 
 
                 <li class="nav-item " >
-                    <a href="" class="nav-link">
-                        <i class="nav-icon fa  fa-university"></i>
+                    <a href="{{route('category.index')}}" class="nav-link">
+                        <i class="nav-icon fa fa-list-ul"></i>
                         <p>
-                            Post
+                            Category
                         </p>
                     </a>
                 </li>

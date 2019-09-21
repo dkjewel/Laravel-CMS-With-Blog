@@ -33,8 +33,16 @@
 
 <!-- Main Content-->
     <div class="content-wrapper">
+        <div class="container">
 
-        @yield('content')
+
+
+            <div class="row justify-content-center">
+
+                @yield('content')
+            </div>
+        </div>
+
     </div>
 
 
@@ -52,5 +60,7 @@
 <script src="{{asset('/')}}plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('/')}}dist/js/adminlte.min.js"></script>
+
+@yield('scripts')
 </body>
 </html>
