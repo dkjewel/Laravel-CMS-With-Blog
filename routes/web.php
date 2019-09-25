@@ -24,3 +24,7 @@ Route::resource('category', 'CategoryController');
 Route::resource('tag', 'TagController');
 
 Route::resource('post', 'PostController');
+
+Route::get('trash-post', 'PostController@trashPost')->name('post.trash');
+
+Route::put('restore-post/{post}', 'PostController@restore')->name('post.restore');

@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\Auth;
 class PostController extends Controller
 {
 
+    public function trashPost()
+    {
+
+        $trashedPosts = Post::onlyTrashed()->get();
+        return view('backend.post.trash-post', compact('trashedPosts'));
+    }
+
+
     public function index()
     {
         return view('backend.post.index')->with('posts', Post::all());
@@ -89,7 +97,7 @@ class PostController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'slug' => 'unique:posts,slug,'.$post->id,
+            'slug' => 'unique:posts,slug,' . $post->id,
             'image' => 'mimes:jpeg,png,jpg',
             'category_id' => 'required',
             'tags' => 'required',
@@ -106,8 +114,7 @@ class PostController extends Controller
             $imageUrl = request()->image->move(('storage/image'), $imageName);
 
             unlink($post->image);
-        }
-        else {
+        } else {
             $imageUrl = $post->image;
         }
 
@@ -136,15 +143,42 @@ class PostController extends Controller
         return redirect(route('post.index'));
 
 
+    }
 
 
+    public function destroy($id)
+    {
+
+        $post = Post::withTrashed()->where('id', $id)->first();
+
+        if ($post->trashed()) {
+
+            unlink($post->image);
+            $post->forceDelete();
+
+            $post->tags()->detach();
+
+            session()->flash('success', 'Post Moved To Trashed');
+            return redirect(route('post.trash'));
+
+        } else {
+            $post->delete();
+
+            session()->flash('success', 'Post Moved To Trashed');
+            return redirect(route('post.index'));
+        }
 
 
     }
 
-
-    public function destroy(Post $post)
+    public function restore($id)
     {
-        //
+        $post = Post::withTrashed()->where('id', $id)->firstOrFail();
+
+        $post->restore();
+
+
+        session()->flash('success', 'Post Restored To Trashed');
+        return redirect(route('post.index'));
     }
 }

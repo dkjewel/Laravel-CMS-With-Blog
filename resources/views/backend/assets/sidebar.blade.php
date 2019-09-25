@@ -56,6 +56,16 @@
                 </li>
 
 
+                <li class="nav-item mt-3">
+                    <a href="{{route('post.trash')}}" class="nav-link">
+                        <i class="nav-icon fa fa-trash"></i>
+                        <p>
+                            Trashed Post
+                        </p>
+                    </a>
+                </li>
+
+
                 {{--LogOut--}}
 
                 <li class="nav-item mt-3">

@@ -3,6 +3,9 @@
 
 @section('css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.0/trix.css" rel="stylesheet"/>
 @endsection
 
 @section('content')
@@ -117,7 +120,9 @@
                         <div class="card-header text-center">Post Details!</div>
 
                         <div class="card-body">
-                            <textarea class="form-control" name="body" rows="8"></textarea>
+
+                            <input class="form-control" name="body" type="hidden"  id="body">
+                            <trix-editor input="body"></trix-editor>
 
                             <span
                                 class="badge text text-danger"> {{$errors->has('body') ? $errors->first('body'):''}} </span>
@@ -139,6 +144,9 @@
 @section('scripts')
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.0/trix.js"></script>
 
 
     <script>

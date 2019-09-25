@@ -11,26 +11,24 @@
         @endif
 
 
-{{--        @if(session()->has('success-trash'))--}}
-{{--            <div class="alert alert-success text-center">--}}
-{{--                {{ session()->get('success-trash') }}--}}
+        {{--        @if(session()->has('success-trash'))--}}
+        {{--            <div class="alert alert-success text-center">--}}
+        {{--                {{ session()->get('success-trash') }}--}}
 
-{{--                @foreach($posts as $post)--}}
-{{--                    <form action="{{route('post.restore',$post->id)}}" method="POST">--}}
-{{--                        @csrf--}}
-{{--                        @method('PUT')--}}
-{{--                        <button type="submit" class="btn btn-sm btn-secondary">Undo</button>--}}
-{{--                    </form>--}}
-{{--                @endforeach--}}
-{{--            </div>--}}
-{{--        @endif--}}
+        {{--                @foreach($posts as $post)--}}
+        {{--                    <form action="{{route('post.restore',$post->id)}}" method="POST">--}}
+        {{--                        @csrf--}}
+        {{--                        @method('PUT')--}}
+        {{--                        <button type="submit" class="btn btn-sm btn-secondary">Undo</button>--}}
+        {{--                    </form>--}}
+        {{--                @endforeach--}}
+        {{--            </div>--}}
+        {{--        @endif--}}
 
 
         <div class="card card-default">
 
-            <div class="card-header text-center">Manage Post
-                <a href="{{route('post.create')}}" class="btn btn-info btn-sm float-right ">Add Post</a>
-            </div>
+            <div class="card-header text-center">Manage Trashed Post</div>
 
 
             <div class="card-body">
@@ -50,19 +48,19 @@
 
                     <tbody>
 
-                    @if($posts->count() > 0)
-                        @foreach($posts as $post)
+                    @if($trashedPosts->count() > 0)
+                        @foreach($trashedPosts as $trashedPost)
                             <tr>
-                                <td>{{ $post->title }}</td>
+                                <td>{{ $trashedPost->title }}</td>
 
                                 <td>
-                                    <img src="{{asset($post->image)}}" height="40" width="40">
+                                    <img src="{{asset($trashedPost->image)}}" height="40" width="40">
                                 </td>
 
-                                <td>{!! str_limit(strip_tags($post->body), $limit = 10, $end = '...') !!}</td>
+                                <td>{!! str_limit(strip_tags($trashedPost->body), $limit = 10, $end = '...') !!}</td>
 
                                 <td>
-                                    @if($post->status == true)
+                                    @if($trashedPost->status == true)
                                         <span class="badge badge-success">Published</span>
                                     @else
                                         <span class="badge badge-danger">Not Published</span>
@@ -70,19 +68,23 @@
                                 </td>
 
                                 <td>
-                                    <a href="{{ route('post.show', $post->id) }}"
-                                       class="btn btn-success btn-sm">Show</a>
 
-                                    <a href="{{ route('post.edit', $post->id) }}" class="btn btn-info btn-sm">Edit</a>
+                                    <form action="{{route('post.restore',$trashedPost->id)}}" method="POST">
+                                        @csrf
+                                        @method('PUT')
 
-                                    <button class="btn btn-danger btn-sm" onclick="handleDelete({{ $post->id }})">
-                                        Trash
-                                    </button>
+                                        <a class="btn btn-danger btn-sm"
+                                           onclick="handleDelete({{ $trashedPost->id }})">
+                                            Delete
+                                        </a>
+
+                                        <button type="submit" class="btn btn-info btn-sm">Restore</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
                     @else
-                        <h3 class="text-center alert alert-danger">No Tags Yet! Plz Add Some Post</h3>
+                        <h3 class="text-center alert alert-danger">No Trash Post Yet!</h3>
                     @endif
                     </tbody>
                 </table>
@@ -93,7 +95,7 @@
                      aria-hidden="true">
                     <div class="modal-dialog" role="document">
 
-                        <form action="" method="POST" id="trashPostForm">
+                        <form action="" method="POST" id="deletePostForm">
                             @csrf
                             @method('DELETE')
 
@@ -111,7 +113,7 @@
 
                                 <div class="modal-body">
                                     <p class="text-center text-bold">
-                                        Are you sure you want to Trash this Post ?
+                                        Are you sure you want to Delete this Post ?
                                     </p>
                                 </div>
 
@@ -119,7 +121,7 @@
 
                                     <button type="button" class="btn btn-secondary btn-sm " data-dismiss="modal">Back
                                     </button>
-                                    <button type="submit" class="btn btn-danger btn-sm">Trash</button>
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
 
                                 </div>
 
@@ -143,7 +145,7 @@
 
             $('#deleteModal').modal('show');
 
-            var form = document.getElementById('trashPostForm');
+            var form = document.getElementById('deletePostForm');
             form.action = '/post/' + id;
 
 
