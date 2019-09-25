@@ -30,11 +30,13 @@
                         <i class="nav-icon fa fa-list-ul"></i>
                         <p>
                             Category
+
                         </p>
                     </a>
                 </li>
 
-                <li class="nav-item mt-2">
+
+                <li class="nav-item mt-3">
                     <a href="{{route('tag.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-tag"></i>
                         <p>
@@ -44,9 +46,19 @@
                 </li>
 
 
+                <li class="nav-item mt-3">
+                    <a href="{{route('post.index')}}" class="nav-link">
+                        <i class="nav-icon fa fa-table"></i>
+                        <p>
+                            Post
+                        </p>
+                    </a>
+                </li>
+
+
                 {{--LogOut--}}
 
-                <li class="nav-item mt-2">
+                <li class="nav-item mt-3">
 
                     <a class="nav-link" href="{{ route('logout') }}"
                        onclick="event.preventDefault();
