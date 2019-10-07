@@ -24,8 +24,19 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
 
+                @if(auth()->user()->isAdmin())
+                    <li class="nav-item">
+                        <a href="{{route('user.index')}}" class="nav-link">
+                            <i class="nav-icon fa fa-users"></i>
+                            <p>
+                                Manage Users
+                            </p>
+                        </a>
+                    </li>
+                @endif
 
-                <li class="nav-item " >
+
+                <li class="nav-item mt-3">
                     <a href="{{route('category.index')}}" class="nav-link">
                         <i class="nav-icon fa fa-list-ul"></i>
                         <p>
@@ -66,6 +77,16 @@
                 </li>
 
 
+                <li class="nav-item mt-3">
+                    <a href="" class="nav-link">
+                        <i class="nav-icon fa fa-user-circle"></i>
+                        <p>
+                            Update Profile
+                        </p>
+                    </a>
+                </li>
+
+
                 {{--LogOut--}}
 
                 <li class="nav-item mt-3">
@@ -82,6 +103,7 @@
                         @csrf
                     </form>
                 </li>
+
 
             </ul>
         </nav>
